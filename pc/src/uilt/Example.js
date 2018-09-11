@@ -1,3 +1,4 @@
+import provinces from "./Provincelist";
 export default
 {
     getMeetingRoom()
@@ -29,6 +30,11 @@ export default
             object = {start: '00:00',step: '00:30',end: '23:00',minTime:''}; 
         }
         return object;
+    },
+    getOrganizationTree()
+    {
+        let array=provinces.getProvince();
+        return array;
     },
 
 }

@@ -31,7 +31,7 @@
 </el-form-item>
     <div class="form-change-time"><span @click="pickerTimeClick(pickerText)">{{pickerText}}</span></div>
 <div class="tags">
-    <div class="form-reference-user"><span>选择参会人员</span></div>
+    <div class="form-reference-user"><span @click="selectOrg()">选择参会人员</span></div>
     <div class="form-reference-tag">
        <el-tag
   v-for="tag in tags"
@@ -43,7 +43,10 @@
     </div>
 </div>
 <el-input type="textarea" :rows="4" placeholder="请输入内容" style="margin-top:10px;" />
-<div class="form-submit-button"><el-button type="success" @click="submitForm('ruleForm')">提交申请</el-button></div>
+<div class="form-submit-button">
+    <el-button @click="cleanerForm()">取消预约</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm')">提交申请</el-button>
+    </div>
 
 
         </el-form>
@@ -110,6 +113,23 @@ export default {
               }
           )
       },
+      cleanerForm:function()
+      {
+          let that = this;
+          this.$alert("你确要要取消吗？确定后，信息将清空...","系统提示",{
+              callback:action => {
+                  that.formCleaner();
+              }
+          });
+          
+      },
+      formCleaner:function()
+      {
+          this.$emit("resetForm");
+          this.$refs["ruleForm"].resetFields();
+          this.clientShow = false;
+          this.pickerTimeClick("8小时");
+      },
       meetingTypeSelect:function()
       {
           
@@ -143,6 +163,10 @@ export default {
       setFormDate:function(value)
       {
           this.ruleForm.date = value;
+      },
+      selectOrg:function()
+      {
+          this.$store.commit("setIndexRightState","org");
       }
   }
 };

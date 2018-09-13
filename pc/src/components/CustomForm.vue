@@ -33,11 +33,9 @@
 <div class="tags">
     <div class="form-reference-user"><span @click="selectOrg()">选择参会人员</span></div>
     <div class="form-reference-tag">
-       <el-tag
-  v-for="tag in tags"
-  :key="tag.name"
+       <el-tag v-for="(tag,index) in tags" :key="index"
   closable
-  :type="tag.type">
+  :type="tag.type" @close="tagClose(tag.node,tag.children,index)">
   {{tag.name}}
 </el-tag> 
     </div>
@@ -53,7 +51,8 @@
     </div>
 </template>
 <script>
-import example from "../uilt/Example"
+import example from "../uilt/Example";
+import events from"../events/Events";
 export default {
   data: function() {
     return {
@@ -83,21 +82,42 @@ export default {
         startTime:[{ required: true, message: '请选择会议开始时间', trigger: 'blur' }],
         endTime:[{ required: true, message: '请选择会议结束时间', trigger: 'blur' }],
       },
-      tags: [
-          { name: '标签一', type: '' },
-          { name: '标签二', type: 'success' },
-          { name: '标签三', type: 'info' },
-          { name: '标签四', type: 'warning' },
-          { name: '标签五', type: 'danger' }
-        ]
+      tags: []
     };
   },
   mounted:function()
   {
       this.meetingTypeOptions = example.getMeetingType();
       this.pickerOptionEnd=this.pickerOptionStart = example.getTimeStepOptions(0);
+      events.$on("orgComplete",this.updateTags);
+      
   },
   methods:{
+      tagClose:function(i,j,index)
+      {
+         
+          this.tags.splice(index,1);
+          this.$store.commit("setOrglistItem",[i,j]);
+      },
+      updateTags:function()
+      {
+          this.tags = [];
+          let array = this.$store.state.orglistArray;
+          for(let i=0;i<array.length;i++)
+          {
+              for(let j=0;j<array[i].children.length;j++)
+              {
+                  if(array[i].children[j].selected)
+                  {
+                  let temp = {};
+                  temp.node = i;
+                  temp.children = j;
+                  temp.name = array[i].children[j].name;
+                  this.tags.push(temp);
+                  }
+              }
+          }
+      },
       submitForm:function(formName)
       {
           this.$refs[formName].validate(
@@ -129,6 +149,9 @@ export default {
           this.$refs["ruleForm"].resetFields();
           this.clientShow = false;
           this.pickerTimeClick("8小时");
+          this.tags = [];
+          this.$store.commit("resetOrglistArray",example.getOrganizationTree());
+          events.$emit("restform");
       },
       meetingTypeSelect:function()
       {
@@ -175,6 +198,9 @@ export default {
 .form-main-page
 {
     padding: 20px;
+    height: 96%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .form-main-page .el-select
 {
@@ -203,10 +229,15 @@ export default {
 {
     display: flex;
     flex-wrap: wrap;
+    
 }
 .form-reference-tag .el-tag
 {
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 23%;
+    margin-top: 15px;
     margin-right: 7px;
 }
 .form-submit-button

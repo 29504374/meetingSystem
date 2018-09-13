@@ -30,7 +30,7 @@ export default
         getOrganizationTree() {
             let provinceArray = provinces.getProvince();
             let array = []
-            
+
             for (let i = 0; i < provinceArray.length; i++) {
                 let temp = [];
                 let node = {}
@@ -45,8 +45,19 @@ export default
                 node.children = temp;
                 array.push(node);
             }
-            console.log(array);
-            
+            return array;
+        },
+        getMeetingOrder()
+        {
+            let array = [
+                {name:'王一明',phone:'18801001111',state:'已结束',height:'1',margin:0},
+                {name:'王二明',phone:'18801001111',state:'未开始',height:'1',margin:1},
+                {name:'王三明',phone:'18801001111',state:'进行中',height:'1',margin:1},
+                {name:'王一明',phone:'18801001111',state:'已结束',height:'1',margin:1},
+                {name:'王二明',phone:'18801001111',state:'未开始',height:'1',margin:1},
+                {name:'王三明',phone:'18801001111',state:'进行中',height:'1',margin:1},
+                
+            ];
             return array;
         },
 

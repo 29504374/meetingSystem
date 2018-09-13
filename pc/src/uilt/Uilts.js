@@ -32,7 +32,7 @@ export default
             {
                 obj.meetingTime = "09:00-10:00";
                 obj.meetingType = "客户访问";
-                obj.meetingState = "进行中";
+                obj.meetingState = "已结束";
             }
             array.push(obj);
         }

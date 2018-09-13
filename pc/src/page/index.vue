@@ -70,8 +70,7 @@ export default {
           }
         )
       }
-      
-    }
+    },
   },
   components: {
     Calendar,
@@ -137,6 +136,11 @@ export default {
   justify-content: space-between;
 }
 .right-org
+{
+  width: 100%;
+  height: 100%;
+}
+.right-form
 {
   width: 100%;
   height: 100%;

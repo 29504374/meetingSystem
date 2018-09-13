@@ -11,14 +11,15 @@
         </div>
       </div>
       <div class="org-button-page">
-        <el-button type="primary">重置</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="restOrgSelected()">重置</el-button>
+        <el-button type="primary" @click="submitOrgSelect()">确定</el-button>
       </div>
 </div>
    
 </template>
 <script>
 import example from "../uilt/Example";
+import events from"../events/Events";
 export default {
   data: function() {
     return {
@@ -30,7 +31,13 @@ export default {
   },
   methods: {
     init: function() {
-      this.list = example.getOrganizationTree();
+      this.$store.commit("setOrglistArray",example.getOrganizationTree());
+      this.list =this.$store.state.orglistArray;
+      events.$on("restform",this.restformHandler);
+    },
+    restformHandler:function()
+    {
+      this.list =this.$store.state.orglistArray;
     },
     selectDepartments: function(index) {
       this.selectAll(index, this.list[index].selected);
@@ -41,7 +48,31 @@ export default {
         array[i].selected = booleans;
       }
     },
-    selectItem: function(i, j) {}
+    selectItem: function(i, j) {
+      let array = this.list[i].children;
+      let count = 0;
+      for (let i = 0; i < array.length; i++) {
+        if (array[i].selected) {
+          count++;
+        }
+      }
+      if (count == array.length) {
+        this.list[i].selected = true;
+      } else {
+        this.list[i].selected = false;
+      }
+    },
+    restOrgSelected:function()
+    {
+      
+      this.$store.commit("resetOrglistArray",example.getOrganizationTree());
+      this.list = this.$store.state.orglistArray;
+    },
+    submitOrgSelect:function()
+    {
+      this.$store.commit("setIndexRightState","tabel");
+      events.$emit("orgComplete");
+    }
   }
 };
 </script>

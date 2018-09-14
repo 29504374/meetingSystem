@@ -5,7 +5,10 @@
         <selectRoom />
       </div>
     </div>
-    <div class="index-main-layout"></div>
+    <div class="index-main-layout">
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
   </div>
 </template>
 <script>
@@ -18,5 +21,6 @@ export default {
 </script>
 
 <style>
+@import url('../style/global.css');
 @import url('../style/index.css');
 </style>

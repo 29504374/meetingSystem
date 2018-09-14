@@ -52,10 +52,14 @@ export default
             let array = [
                 {name:'王一明',phone:'18801001111',state:'已结束',height:'1',margin:0},
                 {name:'王二明',phone:'18801001111',state:'未开始',height:'1',margin:1},
-                {name:'王三明',phone:'18801001111',state:'进行中',height:'1',margin:1},
-                {name:'王一明',phone:'18801001111',state:'已结束',height:'1',margin:1},
-                {name:'王二明',phone:'18801001111',state:'未开始',height:'1',margin:1},
-                {name:'王三明',phone:'18801001111',state:'进行中',height:'1',margin:1},
+                {name:'王三明',phone:'18801001111',state:'未开始',height:'1',margin:2},
+                {name:'王四明',phone:'18801001111',state:'进行中',height:'1',margin:3},
+                {name:'王五明',phone:'18801001111',state:'未开始',height:'1',margin:4},
+                {name:'王六明',phone:'18801001111',state:'未开始',height:'1',margin:5},
+                {name:'王七明',phone:'18801001111',state:'未开始',height:'1',margin:6},
+                {name:'王八明',phone:'18801001111',state:'未开始',height:'1',margin:7},
+                {name:'王九明',phone:'18801001111',state:'未开始',height:'1',margin:8},
+                {name:'王十明',phone:'18801001111',state:'未开始',height:'1',margin:9},
                 
             ];
             return array;

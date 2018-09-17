@@ -39,21 +39,17 @@
   
 </template>
 <style>
-.tabel-main-page
-{
+.tabel-main-page {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.tabel-list-page
-{
-  
+.tabel-list-page {
   height: 94%;
   margin: 20px;
 }
-.tabel-list-bottom
-{
+.tabel-list-bottom {
   width: 100%;
   height: 100%;
 }
@@ -67,18 +63,17 @@
   border-radius: 5px 5px 0 0;
 }
 .tabel-list-bottom .row {
-width: 100%;
-height:calc(100% - 50px);
-display: flex;
-flex-direction: column;
+  width: 100%;
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
 }
 .tabel-list-bottom .row .for-row {
   display: flex;
   align-items: center;
   height: 10%;
 }
-.tabel-list-top
-{
+.tabel-list-top {
   position: relative;
   z-index: 2;
   width: 85%;
@@ -87,21 +82,19 @@ flex-direction: column;
   margin-left: 15%;
   top: -100%;
   display: flex;
-  padding-top: 4px; 
+  padding-top: 4px;
 }
-.currencyOrder
-{
+.currencyOrder {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color:#ffffff;
+  color: #ffffff;
   border-radius: 5px;
-  box-shadow: 3px 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-.currencyOrder span
-{
+.currencyOrder span {
   margin-top: 5px;
 }
 .even {
@@ -110,47 +103,42 @@ flex-direction: column;
 .align-padding {
   padding-left: 25px;
 }
-.tabel-mark-page
-{
-  width:100%;
+.tabel-mark-page {
+  width: 100%;
   height: 6%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.tabel-mark-page .overMark
-{
+.tabel-mark-page .overMark {
   width: 16px;
   height: 16px;
   background: rgb(248, 97, 31);
   margin-right: 6px;
 }
-.tabel-mark-page .ingMark
-{
+.tabel-mark-page .ingMark {
   width: 16px;
   height: 16px;
   background: rgb(77, 199, 131);
   margin-right: 6px;
 }
-.tabel-mark-page .notMark
-{
+.tabel-mark-page .notMark {
   width: 16px;
   height: 16px;
   background: rgb(53, 143, 245);
   margin-right: 6px;
 }
-.tabel-mark-page span
-{
+.tabel-mark-page span {
   margin-right: 15px;
 }
-.tabel-mark-page .moreStyle
-{
+.tabel-mark-page .moreStyle {
   margin-right: 35px;
   cursor: pointer;
 }
 </style>
 <script>
 import example from "../uilt/Example";
+import uilt from "../uilt/Uilts";
 export default {
   data: function() {
     return {
@@ -158,41 +146,46 @@ export default {
       time: [],
       text: "更多预约",
       orderlist: [],
-      dialog:false,
-      w:0,
-      h:0,
+      dialog: false,
+      w: 0,
+      h: 0
     };
   },
   mounted: function() {
+    this.init(uilt.timeline());
     this.orderlist = example.getMeetingOrder();
+    window.addEventListener("resize", this.resizeHandler);
   },
   methods: {
+    resizeHandler: function() {
+      this.w = this.$refs.tabellistTop.offsetWidth;
+      this.h = this.$refs.tabellistTop.offsetHeight;
+      console.log(this.w,this.h);
+    },
     init: function(array) {
       this.allTime = array;
       this.time = this.allTime.slice(9, 19);
     },
     setOrderStyle: function(array) {
-      if(this.w ==0 && this.h == 0)
-      {
-this.w = this.$refs.tabellistTop.offsetWidth;
-this.h = this.$refs.tabellistTop.offsetHeight;
+      if (this.w == 0 && this.h == 0) {
+        this.w = this.$refs.tabellistTop.offsetWidth;
+        this.h = this.$refs.tabellistTop.offsetHeight;
       }
-      
-      
+
       let obj = {};
       obj.width = "20%";
       obj.position = "absolute";
-      obj.height = (array.height * 9) + "%";
-      obj.marginTop = (this.h*("0."+array.margin))+'px';
+      obj.height = array.height * 9 + "%";
+      obj.marginTop = this.h * ("0." + array.margin) + "px";
       let color = "";
       switch (array.state) {
         case "已结束":
           color = "rgb(248, 97, 31)";
           break;
-           case "进行中":
+        case "进行中":
           color = "rgb(77, 199, 131)";
           break;
-           case "未开始":
+        case "未开始":
           color = "rgb(53, 143, 245)";
           break;
       }
@@ -200,8 +193,6 @@ this.h = this.$refs.tabellistTop.offsetHeight;
       return obj;
     },
     moreClick: function() {
-      
-      
       this.time = [];
       if (!this.$store.state.tabellist) {
         this.time = this.allTime;
@@ -212,15 +203,13 @@ this.h = this.$refs.tabellistTop.offsetHeight;
         this.$store.commit("setTabelList", false);
         this.text = "更多预约";
         this.time = this.allTime.slice(9, 19);
-         this.orderlist = example.getMeetingOrder();
+        this.orderlist = example.getMeetingOrder();
       }
     },
-    dialogClose:function()
-    {
+    dialogClose: function() {
       this.dialog = false;
     },
-    infoPanel:function(index)
-    {
+    infoPanel: function(index) {
       this.dialog = true;
       console.log(index);
     }

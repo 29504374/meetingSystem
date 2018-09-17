@@ -1,8 +1,8 @@
-import provinces from "./Provincelist";
+import org from "./OrgInfo"
 import uilt from "./Uilts"
 export default
     {
-        getMeetingRoom() {
+        getSelectRoomOptions() {
             let array = [
                 { label: "一号会议室", value: "01" },
                 { label: "二号会议室", value: "02" },
@@ -28,17 +28,17 @@ export default
             return object;
         },
         getOrganizationTree() {
-            let provinceArray = provinces.getProvince();
+            let orgArray = org.getProvince();
             let array = []
 
-            for (let i = 0; i < provinceArray.length; i++) {
+            for (let i = 0; i < orgArray.length; i++) {
                 let temp = [];
                 let node = {}
-                node.name = provinceArray[i].name;
+                node.name = orgArray[i].name;
                 node.selected = false;
-                for (let j = 0; j < provinceArray[i].children.length; j++) {
+                for (let j = 0; j < orgArray[i].children.length; j++) {
                     let child = {};
-                    child.name = uilt.justifyContent(provinceArray[i].children[j]);
+                    child.name = uilt.justifyContent(orgArray[i].children[j]);
                     child.selected = false;
                     temp.push(child);
                 }
@@ -49,6 +49,32 @@ export default
         },
         getMeetingOrder()
         {
+            for(let i=0;i<=24;i++)
+            {
+                let obj={};
+                obj.even = true;
+                obj.meetingTime = "";
+                obj.meetingType = "";
+                obj.meetingState = "";
+                let time = "";
+                if(i<10)
+                {
+                    time = "0"+i+":00";
+                }else
+                {
+                    time = i+":00";
+                }
+                obj.time = time;
+                if(i % 2)
+                {
+                    obj.even = false;
+                }else
+                {
+                    obj.even = true;
+                }
+                obj.name = "王"+i+"明";
+                obj.phone = "18801001111";
+            }
             let array = [
                 {name:'王一明',phone:'18801001111',state:'已结束',height:'1',margin:0},
                 {name:'王二明',phone:'18801001111',state:'未开始',height:'1',margin:1},

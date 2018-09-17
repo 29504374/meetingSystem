@@ -26,17 +26,7 @@
     justify-content: flex-end;
    
 }
-.select-room .select-room-component
-{
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-.select-room .select-room-component .seleted
-{
-    width: 300px;
-    margin-right: 20px;
-}
+
 .index-main-layout
 {
     width: var(--global-width-full);
@@ -62,4 +52,16 @@
     background: var(--backgroundWhite);
     border-radius: 8px;
     min-width: 370px;
+    display: flex;
+    flex-direction: column;
+}
+.rigth-tabel-tab
+{
+    width: 100%;
+    height: 100%;
+}
+.rigth-org-tab
+{
+    width: 100%;
+    height: 100%;
 }

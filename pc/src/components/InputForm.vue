@@ -236,7 +236,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 23%;
+    width: 22%;
     margin-top: 15px;
     margin-right: 7px;
 }

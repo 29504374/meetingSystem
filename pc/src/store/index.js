@@ -5,12 +5,12 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+        today: '',
         indexRightState: [true, false, false],
         tabellist: false,
         organization: false,
         selectRoom: '',
         selectdate: '',
-        today: '',
         orglistArray: [],
     },
     mutations: {

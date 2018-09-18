@@ -145,12 +145,12 @@ export default {
       },
       formCleaner:function()
       {
-          this.$emit("resetForm");
           this.$refs["ruleForm"].resetFields();
           this.clientShow = false;
           this.pickerTimeClick("8小时");
           this.tags = [];
           this.$store.commit("resetOrglistArray",example.getOrganizationTree());
+          this.$store.commit("setIndexRightState","default");
           events.$emit("restform");
       },
       meetingTypeSelect:function()

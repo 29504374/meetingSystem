@@ -1,9 +1,9 @@
 <template>
     <div class="select-room-component">
-        <el-select  placeholder="选择会议室" class="seleted" v-model="value" v-bind:disabled="disabled">
+        <el-select  placeholder="选择会议室" class="seleted" v-model="value" v-bind:disabled="!this.$store.state.indexRightState[0]">
            <el-option v-for="(item,index) in options" :key="index" :label="item.label" :value="item.label" />
          </el-select>
-        <el-button type="primary" @click="submitRequisite()" v-bind:disabled="disabled" >预约会议室</el-button>
+        <el-button type="primary" @click="submitRequisite()" v-bind:disabled="!this.$store.state.indexRightState[0]" >预约会议室</el-button>
     </div>
 </template>
 <script>
@@ -12,7 +12,6 @@ export default {
   data: function() {
     return {
       value: "",
-      disabled:false,
       options: []
     };
   },
@@ -26,7 +25,6 @@ export default {
     submitRequisite: function() {
       if (this.value != "") {
         this.$store.commit("setIndexRightState", "tabel");
-        this.disabled = true;
       }
     }
   }

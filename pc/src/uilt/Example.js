@@ -47,15 +47,13 @@ export default
             }
             return array;
         },
-        getMeetingOrder()
+        getMeetinglist(boolean)
         {
+            let array = [];
             for(let i=0;i<=24;i++)
             {
                 let obj={};
                 obj.even = true;
-                obj.meetingTime = "";
-                obj.meetingType = "";
-                obj.meetingState = "";
                 let time = "";
                 if(i<10)
                 {
@@ -68,27 +66,44 @@ export default
                 if(i % 2)
                 {
                     obj.even = false;
+                    obj.state = "未开始";
+                    obj.type = "客户访问";
                 }else
                 {
                     obj.even = true;
+                    obj.state = "进行中";
+                    obj.type = "部门会议";
                 }
                 obj.name = "王"+i+"明";
                 obj.phone = "18801001111";
+                obj.height = "1";
+                //obj.margin = i;
+                array.push(obj);
             }
-            let array = [
-                {name:'王一明',phone:'18801001111',state:'已结束',height:'1',margin:0},
-                {name:'王二明',phone:'18801001111',state:'未开始',height:'1',margin:1},
-                {name:'王三明',phone:'18801001111',state:'未开始',height:'1',margin:2},
-                {name:'王四明',phone:'18801001111',state:'进行中',height:'1',margin:3},
-                {name:'王五明',phone:'18801001111',state:'未开始',height:'1',margin:4},
-                {name:'王六明',phone:'18801001111',state:'未开始',height:'1',margin:5},
-                {name:'王七明',phone:'18801001111',state:'未开始',height:'1',margin:6},
-                {name:'王八明',phone:'18801001111',state:'未开始',height:'1',margin:7},
-                {name:'王九明',phone:'18801001111',state:'未开始',height:'1',margin:8},
-                {name:'王十明',phone:'18801001111',state:'未开始',height:'1',margin:9},
-                
-            ];
+           if(boolean)
+           {
+               array = array.slice(9,19);
+           }
             return array;
         },
+        getMeetingWorklist()
+        {
+            let array = [];
+            let list = this.getMeetinglist();
+            
+            
+            for(let i=9;i<=18;i++)
+            {
+                let object = {};
+                object.name = list[i].name;
+                object.phone = list[i].phone;
+                object.state = "已结束";
+                object.height = 1;
+                object.margin = i - 9;
+                array.push(object);
+            }
+            
+            return array;
+        }
 
     }

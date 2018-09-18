@@ -12,17 +12,17 @@
 </el-row>
         </div>
         <div class="row">
-<el-row v-for="(item,index) in time" :key="index" class="for-row" :class="{even:item.even}">
+<el-row v-for="(item,index) in list" :key="index" class="for-row" :class="{even:item.even}">
     <el-col :span="4" class="align-padding">{{item.time}}</el-col>
     <el-col :span="10"></el-col>
-    <el-col :span="4">{{item.meetingTime}}</el-col>
-    <el-col :span="4">{{item.meetingType}}</el-col>
-    <el-col :span="2">{{item.meetingState}}</el-col>
+    <el-col :span="4">{{item.time}}</el-col>
+    <el-col :span="4">{{item.type}}</el-col>
+    <el-col :span="2">{{item.state}}</el-col>
 </el-row>
 </div>
       </div>
       <div class="tabel-list-top" ref="tabellistTop" v-show="!this.$store.state.tabellist">
-<div v-for="(item,index) in orderlist" :key="index" :style="setOrderStyle(item)" class="currencyOrder" @click="infoPanel(index)">
+<div v-for="(item,index) in worklist" :key="index" :style="setWorkStyle(item)" class="currencyOrder" @click="infoPanel(index)">
     <span>{{item.name}}</span>
     <span>{{item.phone}}</span>
   </div>
@@ -46,7 +46,7 @@
   flex-direction: column;
 }
 .tabel-list-page {
-  height: 94%;
+  height: 90%;
   margin: 20px;
 }
 .tabel-list-bottom {
@@ -138,45 +138,39 @@
 </style>
 <script>
 import example from "../uilt/Example";
-import uilt from "../uilt/Uilts";
 export default {
   data: function() {
     return {
-      allTime: [],
-      time: [],
+      list: [],
       text: "更多预约",
-      orderlist: [],
+      worklist: [],
       dialog: false,
-      w: 0,
-      h: 0
+      workWidth: 0,
+      workHeight: 0
     };
   },
   mounted: function() {
-    this.init(uilt.timeline());
-    this.orderlist = example.getMeetingOrder();
+     this.list = example.getMeetinglist(true);
+     this.worklist = example.getMeetingWorklist();
     window.addEventListener("resize", this.resizeHandler);
   },
   methods: {
     resizeHandler: function() {
-      this.w = this.$refs.tabellistTop.offsetWidth;
-      this.h = this.$refs.tabellistTop.offsetHeight;
-      console.log(this.w,this.h);
+      this.workWidth = this.$refs.tabellistTop.offsetWidth;
+      this.workHeight = this.$refs.tabellistTop.offsetHeight;
     },
-    init: function(array) {
-      this.allTime = array;
-      this.time = this.allTime.slice(9, 19);
-    },
-    setOrderStyle: function(array) {
-      if (this.w == 0 && this.h == 0) {
-        this.w = this.$refs.tabellistTop.offsetWidth;
-        this.h = this.$refs.tabellistTop.offsetHeight;
+    
+    setWorkStyle: function(array) {
+      if (this.workWidth == 0 && this.workHeight == 0) {
+        this.workWidth = this.$refs.tabellistTop.offsetWidth;
+        this.workHeight = this.$refs.tabellistTop.offsetHeight;
       }
 
       let obj = {};
       obj.width = "20%";
       obj.position = "absolute";
       obj.height = array.height * 9 + "%";
-      obj.marginTop = this.h * ("0." + array.margin) + "px";
+      obj.marginTop = this.workHeight * ("0." + array.margin) + "px";
       let color = "";
       switch (array.state) {
         case "已结束":
@@ -193,17 +187,17 @@ export default {
       return obj;
     },
     moreClick: function() {
-      this.time = [];
+      
       if (!this.$store.state.tabellist) {
-        this.time = this.allTime;
+        this.list = example.getMeetinglist(false);
         this.$store.commit("setTabelList", true);
         this.text = "返回";
-        this.orderlist = [];
+        this.worklist = [];
       } else {
         this.$store.commit("setTabelList", false);
         this.text = "更多预约";
-        this.time = this.allTime.slice(9, 19);
-        this.orderlist = example.getMeetingOrder();
+        this.list = example.getMeetinglist(true);
+        this.worklist = example.getMeetingWorklist();
       }
     },
     dialogClose: function() {

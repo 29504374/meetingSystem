@@ -32,7 +32,10 @@ import inputForm from "@/components/InputForm";
 import organization from "@/components/Organization";
 import leftTabel from "@/components/LeftTabel";
 export default {
- 
+ mounted:function()
+ {
+   //event.$on("re")
+ },
   components: {
     selectRoom,
     selectCalendar,

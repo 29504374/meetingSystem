@@ -4,6 +4,7 @@
            <el-option v-for="(item,index) in options" :key="index" :label="item.label" :value="item.label" />
          </el-select>
         <el-button type="primary" @click="submitRequisite()" v-bind:disabled="!this.$store.state.indexRightState[0]" >预约会议室</el-button>
+        <el-button @click="submitCharts()" type="success">统计信息</el-button>
     </div>
 </template>
 <script>
@@ -26,6 +27,10 @@ export default {
       if (this.value != "") {
         this.$store.commit("setIndexRightState", "tabel");
       }
+    },
+    submitCharts:function()
+    {
+      this.$router.push('/charts');
     }
   }
 };
